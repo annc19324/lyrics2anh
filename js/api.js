@@ -1,7 +1,7 @@
-// For Production: Replace 'http://localhost:3000/api' with your Render URL, e.g., 'https://your-app.onrender.com/api'
+// For Production
 const API_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
     ? '/api'
-    : 'https://lyrics2anh-api.onrender.com/api';
+    : 'https://lyrics2anh.onrender.com/api';
 let token = localStorage.getItem('l2a_token');
 let currentUser = null;
 
