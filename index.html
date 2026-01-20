@@ -18,16 +18,24 @@
 </head>
 
 <body>
+    <header id="appHeader" class="modern-header">
+        <div class="header-container">
+            <div class="header-left">
+                <div class="logo-area-header">
+                    <h1>Lyrics2Anh</h1>
+                </div>
+                <div id="footerSocials" style="display:flex; gap:10px;"></div>
+            </div>
+            <div class="header-right">
+                <div id="footerSystem" style="display:flex; gap:12px; align-items:center;"></div>
+            </div>
+        </div>
+    </header>
+
     <div class="app-container">
         <!-- Sidebar Controls -->
         <aside class="sidebar">
-            <div class="logo-area">
-                <h1>Lyrics2Anh</h1>
-                <p>Tạo ảnh nối tiếp TikTok</p>
-            </div>
-
             <div class="controls-container">
-                <!-- Tab Navigation for Controls -->
                 <div class="control-tabs">
                     <button class="tab-btn active" data-tab="content">Nội dung</button>
                     <button class="tab-btn" data-tab="images">Hình ảnh</button>
@@ -38,65 +46,49 @@
                 <div class="tab-content active" id="tab-content">
                     <div class="input-group">
                         <label>Tên bài hát</label>
-                        <textarea id="songName" rows="2"
-                            placeholder="Ví dụ: 14. bản nhạc cuối (cho em)">bản nhạc cuối (cho em)</textarea>
+                        <textarea id="songName" rows="2"></textarea>
                     </div>
-                    <!-- Subname removed per request -->
                     <div class="input-group">
                         <label>Tên ca sĩ</label>
-                        <input type="text" id="artistName" placeholder="Ví dụ: B Ray" value="B Ray">
+                        <input type="text" id="artistName">
                     </div>
                     <div class="input-group">
                         <label>Tên kênh / Cre</label>
-                        <input type="text" id="channelName" placeholder="Ví dụ: annc19324" value="annc19324">
+                        <input type="text" id="channelName">
                     </div>
                     <div class="input-group">
                         <label>Lời bài hát</label>
-                        <textarea id="lyricsText" rows="10" placeholder="Nhập lời bài hát...">Lần đầu gặp gỡ
-Anh đã đem lòng mong nhớ
-Anh đã bắt đầu ngủ ngày
-Chỉ để có thể thấy em trong mơ
-Thế cho nên là
-Vào một ngày nào không may
-Em thấy tim mình tan vỡ
-Vì anh đã không còn đây</textarea>
-                        <p class="hint">Mẹo: Ngắt dòng hợp lý để hiển thị đẹp hơn.</p>
+                        <textarea id="lyricsText" rows="10"></textarea>
                     </div>
                 </div>
 
                 <!-- Tab 2: Images -->
                 <div class="tab-content" id="tab-images">
                     <div class="input-group">
-                        <!-- Presets Grid -->
+                        <label>Ảnh nền (Background)</label>
                         <div class="asset-grid" id="bgAssets">
                             <div class="asset-item" data-src="./assets/bg_1.jpg"
                                 style="background-image: url('./assets/bg_1.jpg')"></div>
-                            <div class="asset-item" data-src="./assets/bg_2.jpg"
-                                style="background-image: url('./assets/bg_2.jpg')"></div>
                             <div class="asset-item" data-src="./assets/bg_3.jpg"
                                 style="background-image: url('./assets/bg_3.jpg')"></div>
                             <div class="asset-item" data-src="./assets/bg_4.jpg"
                                 style="background-image: url('./assets/bg_4.jpg')"></div>
                         </div>
-
                         <div class="file-upload-box" id="bgUploadBox">
                             <i class="fa-solid fa-cloud-arrow-up"></i>
-                            <span>Tải ảnh lên</span>
+                            <span>Tải ảnh nền</span>
                             <input type="file" id="bgInput" accept="image/*">
                         </div>
                     </div>
                     <div class="input-group">
                         <label>Ảnh trung tâm (Art)</label>
-
-                        <!-- Art Presets -->
                         <div class="asset-grid" id="artAssets">
                             <div class="asset-item" data-src="./assets/art_default.png"
                                 style="background-image: url('./assets/art_default.png')"></div>
                         </div>
-
                         <div class="file-upload-box" id="artUploadBox">
                             <i class="fa-solid fa-image"></i>
-                            <span>Tải ảnh lên</span>
+                            <span>Tải ảnh Art</span>
                             <input type="file" id="artInput" accept="image/*">
                         </div>
                     </div>
@@ -121,126 +113,84 @@ Vì anh đã không còn đây</textarea>
                     <div class="input-group">
                         <label>Mẫu thiết kế</label>
                         <select id="templateSelect">
-                            <option value="1">Mẫu 1 (Mặc định: Split Art)</option>
-                            <option value="2">Mẫu 2 (Info Stack + Lyrics)</option>
-                            <option value="3">Mẫu 3 (Toàn màn hình)</option>
+                            <option value="1">Mẫu 1 (Split Art)</option>
+                            <option value="2">Mẫu 2 (Stack Info)</option>
+                            <option value="3">Mẫu 3 (Full Screen)</option>
                         </select>
                     </div>
-
-                    <div class="style-section-title">Vị trí (Chỉnh riêng)</div>
-
                     <div class="input-group">
-                        <label>Vị trí Tên Bài Hát</label>
-                        <div class="slider-group">
-                            <span>X:</span> <input type="range" id="songX" min="-500" max="500" value="0">
-                        </div>
-                        <div class="slider-group">
-                            <span>Y:</span> <input type="range" id="songY" min="-500" max="500" value="0">
-                        </div>
-                    </div>
-
-                    <div class="input-group">
-                        <label>Vị trí Tên Ca Sĩ</label>
-                        <div class="slider-group">
-                            <span>X:</span> <input type="range" id="artistX" min="-500" max="500" value="0">
-                        </div>
-                        <div class="slider-group">
-                            <span>Y:</span> <input type="range" id="artistY" min="-500" max="500" value="0">
-                        </div>
-                    </div>
-
-                    <div class="input-group">
-                        <label>Vị trí Tên Kênh</label>
-                        <div class="slider-group">
-                            <span>X:</span> <input type="range" id="channelX" min="-500" max="500" value="0">
-                        </div>
-                        <div class="slider-group">
-                            <span>Y:</span> <input type="range" id="channelY" min="-500" max="500" value="0">
-                        </div>
-                    </div>
-
-                    <div class="input-group">
-                        <label>Vị trí Lyrics</label>
-                        <div class="slider-group">
-                            <span>X:</span> <input type="range" id="lyricsX" min="-500" max="500" value="0">
-                        </div>
-                        <div class="slider-group">
-                            <span>Y:</span> <input type="range" id="lyricsY" min="-500" max="500" value="0">
-                        </div>
-                        <div class="input-group">
-                            <label>Căn lề Lyrics</label>
-                            <select id="lyricsAlign">
-                                <option value="left" selected>Trái</option>
-                                <option value="center">Giữa</option>
-                                <option value="right">Phải</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="input-group">
-                        <label>Khoảng cách 2 ảnh (Preview)</label>
-                        <input type="range" id="previewGap" min="0" max="100" value="10">
-                    </div>
-
-                    <div class="style-section-title">Giao diện Chữ</div>
-
-                    <div class="input-group">
-                        <label>Phông chữ</label>
+                        <label>Font chữ</label>
                         <select id="fontSelect">
-                            <option value="'Inter', sans-serif">Inter (Hiện đại)</option>
-                            <option value="'Roboto', sans-serif">Roboto</option>
-                            <option value="'Dancing Script', cursive">Dancing Script (Viết tay)</option>
-                            <option value="'Pacifico', cursive">Pacifico</option>
+                            <option value="'Inter', sans-serif">Inter (Mặc định)</option>
                             <option value="'Patrick Hand', cursive">Patrick Hand</option>
-                            <option value="'Playfair Display', serif">Playfair Display (Sang trọng)</option>
-                            <option value="'Oswald', sans-serif">Oswald (Mạnh mẽ)</option>
-                            <option value="'Courier New', monospace">Courier (Typewriter)</option>
+                            <option value="'Dancing Script', cursive">Dancing Script</option>
+                            <option value="'Pacifico', cursive">Pacifico</option>
+                            <option value="'Roboto', sans-serif">Roboto</option>
                         </select>
                     </div>
                     <div class="input-group">
                         <label>Màu chữ</label>
-                        <div class="color-picker-wrapper">
-                            <input type="color" id="textColor" value="#ffffff">
-                            <span>Màu chính</span>
+                        <input type="color" id="textColor" value="#ffffff" style="height: 40px; padding: 2px;">
+                    </div>
+                    <div class="input-group">
+                        <label>Vị trí Tên Bài Hát (X/Y)</label>
+                        <input type="range" id="songX" min="-500" max="500" value="0">
+                        <input type="range" id="songY" min="-500" max="500" value="0">
+                    </div>
+                    <div class="input-group">
+                        <label>Vị trí Tên Ca Sĩ (X/Y)</label>
+                        <input type="range" id="artistX" min="-500" max="500" value="0">
+                        <input type="range" id="artistY" min="-500" max="500" value="0">
+                    </div>
+                    <div class="input-group">
+                        <label>Vị trí Tên Kênh (X/Y)</label>
+                        <input type="range" id="channelX" min="-500" max="500" value="0">
+                        <input type="range" id="channelY" min="-500" max="500" value="-160">
+                    </div>
+                    <div class="input-group">
+                        <label>Căn lề Lyrics</label>
+                        <select id="lyricsAlign">
+                            <option value="left">Trái</option>
+                            <option value="center">Giữa</option>
+                            <option value="right">Phải</option>
+                        </select>
+                    </div>
+                    <div class="grid-2">
+                        <div class="input-group">
+                            <label>Size Tên Bài Hát</label>
+                            <input type="range" id="songSize" min="20" max="150" value="40">
+                        </div>
+                        <div class="input-group">
+                            <label>Size Tên Ca Sĩ</label>
+                            <input type="range" id="artistSize" min="10" max="100" value="30">
+                        </div>
+                        <div class="input-group">
+                            <label>Size Tên Kênh</label>
+                            <input type="range" id="channelSize" min="10" max="100" value="30">
+                        </div>
+                        <div class="input-group">
+                            <label>Size Lời bài hát</label>
+                            <input type="range" id="fontSize" min="10" max="100" value="30">
                         </div>
                     </div>
-
                     <div class="input-group">
-                        <label>Kích thước Logo/Kênh</label>
-                        <input type="range" id="channelSize" min="10" max="100" value="24">
-                    </div>
-
-                    <div class="input-group">
-                        <label>Kích thước Tên Bài Hát</label>
-                        <input type="range" id="songSize" min="20" max="150" value="40">
-                    </div>
-
-                    <div class="input-group">
-                        <label>Kích thước Tên Ca Sĩ</label>
-                        <input type="range" id="artistSize" min="20" max="100" value="30">
-                    </div>
-
-                    <div class="input-group">
-                        <label>Kích thước Lyrics (Chung)</label>
-                        <input type="range" id="fontSize" min="10" max="150" value="30">
+                        <label>Độ mờ lớp phủ (Overlay)</label>
+                        <input type="range" id="overlayOpacity" min="0" max="100" value="40">
                     </div>
                     <div class="input-group">
-                        <label>Độ mờ nền (Overlay)</label>
-                        <input type="range" id="overlayOpacity" min="0" max="90" value="40">
-                    </div>
-                    <div class="input-group">
-                        <label>Độ mờ Blur nền</label>
+                        <label>Độ mờ ảnh nền (Blur)</label>
                         <input type="range" id="bgBlur" min="0" max="20" value="0">
+                    </div>
+                    <div class="input-group">
+                        <label>Khoảng cách 2 ảnh</label>
+                        <input type="range" id="previewGap" min="0" max="100" value="10">
                     </div>
                 </div>
 
                 <div class="action-buttons">
-                    <button id="resetBtn" class="btn btn-secondary"><i class="fa-solid fa-rotate-right"></i>
-                        Reset</button>
-                    <button id="generateBtn" class="btn btn-primary"><i class="fa-solid fa-wand-magic-sparkles"></i> Tạo
-                        Ảnh</button>
-                    <button id="downloadBtn" class="btn btn-success"><i class="fa-solid fa-download"></i> Tải
-                        Xuống</button>
+                    <button id="resetBtn" class="btn btn-secondary">Reset</button>
+                    <button id="generateBtn" class="btn btn-primary">Cập nhật</button>
+                    <button id="downloadBtn" class="btn btn-primary" style="background:#10b981">Tải xuống</button>
                 </div>
             </div>
         </aside>
@@ -250,28 +200,123 @@ Vì anh đã không còn đây</textarea>
             <div class="preview-header">
                 <h2>Xem trước</h2>
                 <div class="zoom-controls">
-                    <button id="zoomOut"><i class="fa-solid fa-minus"></i></button>
+                    <button id="zoomOut">-</button>
                     <span id="zoomLevel">100%</span>
-                    <button id="zoomIn"><i class="fa-solid fa-plus"></i></button>
+                    <button id="zoomIn">+</button>
                 </div>
             </div>
 
             <div class="canvas-container-scroll">
                 <div class="canvas-container-inner" id="canvasContainerInner">
                     <div class="canvas-wrapper">
-                        <div class="canvas-label">Ảnh 1 (Bìa / Intro)</div>
                         <canvas id="canvas1"></canvas>
                     </div>
                     <div class="canvas-wrapper">
-                        <div class="canvas-label">Ảnh 2 (Lyrics)</div>
                         <canvas id="canvas2"></canvas>
                     </div>
                 </div>
             </div>
+
+            <!-- Donate Section -->
+            <div id="donateSection" class="modal hidden">
+                <div class="modal-content" style="text-align:center;">
+                    <h3>Ủng hộ tác giả</h3>
+                    <div id="qrDisplay" style="margin:20px 0;"></div>
+                    <button id="closeDonate" class="btn btn-secondary" style="width:100%">Đóng</button>
+                </div>
+            </div>
         </main>
+
+        <!-- Right Sidebar: Comments -->
+        <aside class="sidebar-right">
+            <div class="comments-header">
+                <h3>Bình luận (<span id="commentCount">0</span>)</h3>
+            </div>
+            <div id="commentAuthWarning" class="auth-warning">
+                Bạn cần <a href="#" id="triggerLogin">Đăng nhập</a> để bình luận.
+            </div>
+            <div id="commentInputArea" class="comment-input-area hidden"
+                style="padding:15px; border-bottom:1px solid var(--border-color);">
+                <div class="user-badge" style="margin-bottom:10px;">User: <span id="currentUserName">...</span></div>
+                <div style="display:flex; gap:10px;">
+                    <input type="text" id="commentText" placeholder="Nhập bình luận...">
+                    <button id="postCommentBtn" class="btn btn-primary"><i class="fa-solid fa-paper-plane"></i></button>
+                </div>
+            </div>
+            <div id="commentsList" class="comments-list"></div>
+        </aside>
     </div>
 
-    <script src="script.js"></script>
+
+    <!-- Auth Modal -->
+    <div id="authModal" class="modal hidden">
+        <div class="modal-content">
+            <h2 id="authTitle" style="margin-bottom:20px;">Đăng nhập</h2>
+            <form id="authForm" autocomplete="off">
+                <div class="input-group" style="margin-bottom:15px;">
+                    <label>Username</label>
+                    <input type="text" id="authUser" required>
+                </div>
+                <div class="input-group" style="margin-bottom:15px; position: relative;">
+                    <label>Password</label>
+                    <input type="password" id="authPass" required style="padding-right: 40px;">
+                    <i class="fa-solid fa-eye-slash" id="togglePassword"
+                        style="position: absolute; right: 12px; top: 32px; cursor: pointer; color: var(--text-muted);"></i>
+                </div>
+                <div style="display:flex; gap:10px; margin-top:20px;">
+                    <button type="button" id="closeAuth" class="btn btn-secondary" style="flex:1">Hủy</button>
+                    <button type="submit" id="authSubmitBtn" class="btn btn-primary" style="flex:1">Đăng nhập</button>
+                </div>
+            </form>
+            <p style="margin-top:20px; text-align:center; font-size:14px; color:var(--text-muted);">
+                <span id="authSwitchText">Chưa có tài khoản?</span> <a href="#" id="switchAuthMode"
+                    style="color:var(--primary-color);">Đăng ký ngay</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- Admin Panel -->
+    <div id="adminPanel" class="modal hidden">
+        <div class="modal-content admin-content" style="max-width:800px; width:90%; height:80vh;">
+            <div class="admin-header">
+                <h2>Admin Dashboard</h2>
+                <button id="closeAdmin" class="btn btn-secondary">Đóng</button>
+            </div>
+            <div class="admin-tabs">
+                <button class="admin-tab-btn active" data-tab="users">Người dùng</button>
+                <button class="admin-tab-btn" data-tab="ads">Quảng cáo</button>
+                <button class="admin-tab-btn" data-tab="contacts">Liên hệ</button>
+                <button class="admin-tab-btn" data-tab="donate">Donate</button>
+            </div>
+            <div id="admin-users" class="admin-tab-content active" style="margin-top:20px;">
+                <div id="userList"></div>
+            </div>
+            <div id="admin-ads" class="admin-tab-content" style="margin-top:20px;"><button id="addAdBtn"
+                    class="btn btn-primary btn-sm">Thêm quảng cáo</button>
+                <div id="adsList" style="margin-top:10px;"></div>
+            </div>
+            <div id="admin-contacts" class="admin-tab-content" style="margin-top:20px;">
+                <div class="input-group">Facebook: <input type="text" id="contactFb"></div>
+                <button id="saveContactsBtn" class="btn btn-success btn-sm" style="margin-top:10px;">Lưu</button>
+            </div>
+            <div id="admin-donate" class="admin-tab-content" style="margin-top:20px;">
+                <input type="file" id="donateQrInput">
+                <div id="adminQrPreview"></div>
+                <button id="saveDonateBtn" class="btn btn-success btn-sm" style="margin-top:10px;">Lưu QR</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast" class="toast hidden"></div>
+    <div id="adContainer" class="toast hidden" style="bottom:auto; top:20px; border-left:4px solid #F59E0B;">
+        <span id="adText"></span> <button class="close-ad"
+            style="background:none; border:none; color:white; margin-left:10px; cursor:pointer;">&times;</button>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/api.js"></script>
+    <script src="js/canvas.js"></script>
+    <script src="js/main.js"></script>
 </body>
 
 </html>
