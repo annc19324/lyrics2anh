@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lyrics2Anh - Tạo ảnh Lyrics Tiktok</title>
+    <link rel="icon" href="./assets/annc19324.png" type="image/png">
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Dancing+Script:wght@700&family=Pacifico&family=Patrick+Hand&family=Roboto:wght@300;400;500;700&display=swap"
+        rel="stylesheet">
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar Controls -->
+        <aside class="sidebar">
+            <div class="logo-area">
+                <h1>Lyrics2Anh</h1>
+                <p>Tạo ảnh nối tiếp TikTok</p>
+            </div>
+
+            <div class="controls-container">
+                <!-- Tab Navigation for Controls -->
+                <div class="control-tabs">
+                    <button class="tab-btn active" data-tab="content">Nội dung</button>
+                    <button class="tab-btn" data-tab="images">Hình ảnh</button>
+                    <button class="tab-btn" data-tab="style">Giao diện</button>
+                </div>
+
+                <!-- Tab 1: Content -->
+                <div class="tab-content active" id="tab-content">
+                    <div class="input-group">
+                        <label>Tên bài hát</label>
+                        <textarea id="songName" rows="2"
+                            placeholder="Ví dụ: 14. bản nhạc cuối (cho em)">bản nhạc cuối (cho em)</textarea>
+                    </div>
+                    <!-- Subname removed per request -->
+                    <div class="input-group">
+                        <label>Tên ca sĩ</label>
+                        <input type="text" id="artistName" placeholder="Ví dụ: B Ray" value="B Ray">
+                    </div>
+                    <div class="input-group">
+                        <label>Tên kênh / Cre</label>
+                        <input type="text" id="channelName" placeholder="Ví dụ: annc19324" value="annc19324">
+                    </div>
+                    <div class="input-group">
+                        <label>Lời bài hát</label>
+                        <textarea id="lyricsText" rows="10" placeholder="Nhập lời bài hát...">Lần đầu gặp gỡ
+Anh đã đem lòng mong nhớ
+Anh đã bắt đầu ngủ ngày
+Chỉ để có thể thấy em trong mơ
+Thế cho nên là
+Vào một ngày nào không may
+Em thấy tim mình tan vỡ
+Vì anh đã không còn đây</textarea>
+                        <p class="hint">Mẹo: Ngắt dòng hợp lý để hiển thị đẹp hơn.</p>
+                    </div>
+                </div>
+
+                <!-- Tab 2: Images -->
+                <div class="tab-content" id="tab-images">
+                    <div class="input-group">
+                        <!-- Presets Grid -->
+                        <div class="asset-grid" id="bgAssets">
+                            <div class="asset-item" data-src="./assets/bg_1.jpg"
+                                style="background-image: url('./assets/bg_1.jpg')"></div>
+                            <div class="asset-item" data-src="./assets/bg_2.jpg"
+                                style="background-image: url('./assets/bg_2.jpg')"></div>
+                            <div class="asset-item" data-src="./assets/bg_3.jpg"
+                                style="background-image: url('./assets/bg_3.jpg')"></div>
+                            <div class="asset-item" data-src="./assets/bg_4.jpg"
+                                style="background-image: url('./assets/bg_4.jpg')"></div>
+                        </div>
+
+                        <div class="file-upload-box" id="bgUploadBox">
+                            <i class="fa-solid fa-cloud-arrow-up"></i>
+                            <span>Tải ảnh lên</span>
+                            <input type="file" id="bgInput" accept="image/*">
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label>Ảnh trung tâm (Art)</label>
+
+                        <!-- Art Presets -->
+                        <div class="asset-grid" id="artAssets">
+                            <div class="asset-item" data-src="./assets/art_default.png"
+                                style="background-image: url('./assets/art_default.png')"></div>
+                        </div>
+
+                        <div class="file-upload-box" id="artUploadBox">
+                            <i class="fa-solid fa-image"></i>
+                            <span>Tải ảnh lên</span>
+                            <input type="file" id="artInput" accept="image/*">
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label>Mặt nạ ảnh (Mask)</label>
+                        <div class="options-grid" id="maskOptions">
+                            <div class="option-item active" data-value="none">Không</div>
+                            <div class="option-item" data-value="circle">Tròn</div>
+                            <div class="option-item" data-value="rounded">Bo góc</div>
+                            <div class="option-item" data-value="arch">Vòm</div>
+                            <div class="option-item" data-value="album">Album</div>
+                            <div class="option-item" data-value="grunge">Gai góc</div>
+                            <div class="option-item" data-value="blob">Giọt nước</div>
+                            <div class="option-item" data-value="brush">Nét cọ</div>
+                            <div class="option-item" data-value="star">Ngôi sao</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab 3: Style -->
+                <div class="tab-content" id="tab-style">
+                    <div class="input-group">
+                        <label>Mẫu thiết kế</label>
+                        <select id="templateSelect">
+                            <option value="1">Mẫu 1 (Mặc định: Split Art)</option>
+                            <option value="2">Mẫu 2 (Info Stack + Lyrics)</option>
+                            <option value="3">Mẫu 3 (Toàn màn hình)</option>
+                        </select>
+                    </div>
+
+                    <div class="style-section-title">Vị trí (Chỉnh riêng)</div>
+
+                    <div class="input-group">
+                        <label>Vị trí Tên Bài Hát</label>
+                        <div class="slider-group">
+                            <span>X:</span> <input type="range" id="songX" min="-500" max="500" value="0">
+                        </div>
+                        <div class="slider-group">
+                            <span>Y:</span> <input type="range" id="songY" min="-500" max="500" value="0">
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Vị trí Tên Ca Sĩ</label>
+                        <div class="slider-group">
+                            <span>X:</span> <input type="range" id="artistX" min="-500" max="500" value="0">
+                        </div>
+                        <div class="slider-group">
+                            <span>Y:</span> <input type="range" id="artistY" min="-500" max="500" value="0">
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Vị trí Tên Kênh</label>
+                        <div class="slider-group">
+                            <span>X:</span> <input type="range" id="channelX" min="-500" max="500" value="0">
+                        </div>
+                        <div class="slider-group">
+                            <span>Y:</span> <input type="range" id="channelY" min="-500" max="500" value="0">
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Vị trí Lyrics</label>
+                        <div class="slider-group">
+                            <span>X:</span> <input type="range" id="lyricsX" min="-500" max="500" value="0">
+                        </div>
+                        <div class="slider-group">
+                            <span>Y:</span> <input type="range" id="lyricsY" min="-500" max="500" value="0">
+                        </div>
+                        <div class="input-group">
+                            <label>Căn lề Lyrics</label>
+                            <select id="lyricsAlign">
+                                <option value="left" selected>Trái</option>
+                                <option value="center">Giữa</option>
+                                <option value="right">Phải</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Khoảng cách 2 ảnh (Preview)</label>
+                        <input type="range" id="previewGap" min="0" max="100" value="10">
+                    </div>
+
+                    <div class="style-section-title">Giao diện Chữ</div>
+
+                    <div class="input-group">
+                        <label>Phông chữ</label>
+                        <select id="fontSelect">
+                            <option value="'Inter', sans-serif">Inter (Hiện đại)</option>
+                            <option value="'Roboto', sans-serif">Roboto</option>
+                            <option value="'Dancing Script', cursive">Dancing Script (Viết tay)</option>
+                            <option value="'Pacifico', cursive">Pacifico</option>
+                            <option value="'Patrick Hand', cursive">Patrick Hand</option>
+                            <option value="'Playfair Display', serif">Playfair Display (Sang trọng)</option>
+                            <option value="'Oswald', sans-serif">Oswald (Mạnh mẽ)</option>
+                            <option value="'Courier New', monospace">Courier (Typewriter)</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label>Màu chữ</label>
+                        <div class="color-picker-wrapper">
+                            <input type="color" id="textColor" value="#ffffff">
+                            <span>Màu chính</span>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Kích thước Logo/Kênh</label>
+                        <input type="range" id="channelSize" min="10" max="100" value="24">
+                    </div>
+
+                    <div class="input-group">
+                        <label>Kích thước Tên Bài Hát</label>
+                        <input type="range" id="songSize" min="20" max="150" value="40">
+                    </div>
+
+                    <div class="input-group">
+                        <label>Kích thước Tên Ca Sĩ</label>
+                        <input type="range" id="artistSize" min="20" max="100" value="30">
+                    </div>
+
+                    <div class="input-group">
+                        <label>Kích thước Lyrics (Chung)</label>
+                        <input type="range" id="fontSize" min="10" max="150" value="30">
+                    </div>
+                    <div class="input-group">
+                        <label>Độ mờ nền (Overlay)</label>
+                        <input type="range" id="overlayOpacity" min="0" max="90" value="40">
+                    </div>
+                    <div class="input-group">
+                        <label>Độ mờ Blur nền</label>
+                        <input type="range" id="bgBlur" min="0" max="20" value="0">
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <button id="resetBtn" class="btn btn-secondary"><i class="fa-solid fa-rotate-right"></i>
+                        Reset</button>
+                    <button id="generateBtn" class="btn btn-primary"><i class="fa-solid fa-wand-magic-sparkles"></i> Tạo
+                        Ảnh</button>
+                    <button id="downloadBtn" class="btn btn-success"><i class="fa-solid fa-download"></i> Tải
+                        Xuống</button>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Preview Area -->
+        <main class="preview-area">
+            <div class="preview-header">
+                <h2>Xem trước</h2>
+                <div class="zoom-controls">
+                    <button id="zoomOut"><i class="fa-solid fa-minus"></i></button>
+                    <span id="zoomLevel">100%</span>
+                    <button id="zoomIn"><i class="fa-solid fa-plus"></i></button>
+                </div>
+            </div>
+
+            <div class="canvas-container-scroll">
+                <div class="canvas-container-inner" id="canvasContainerInner">
+                    <div class="canvas-wrapper">
+                        <div class="canvas-label">Ảnh 1 (Bìa / Intro)</div>
+                        <canvas id="canvas1"></canvas>
+                    </div>
+                    <div class="canvas-wrapper">
+                        <div class="canvas-label">Ảnh 2 (Lyrics)</div>
+                        <canvas id="canvas2"></canvas>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
