@@ -11,7 +11,7 @@ const DEFAULT_STATE = {
     artistName: "B Ray",
     channelName: "annc19324",
     lyrics: "Lần đầu gặp gỡ\nAnh đã đem lòng mong nhớ\nAnh đã bắt đầu ngủ ngày\nChỉ để có thể thấy em trong mơ\nThế cho nên là\nVào một ngày nào không may\nEm thấy tim mình tan vỡ\nVì anh đã không còn đây",
-    images: { background: null, art: null, bgSrc: './assets/bg_1.jpg', artSrc: './assets/art_default.png' },
+    images: { background: null, art: null, bgSrc: './assets/bg_1.webp', artSrc: './assets/art_default.webp' },
     style: {
         template: '1', font: "'Patrick Hand', cursive", textColor: '#ffffff', fontSize: 30,
         songSize: 40, artistSize: 30, channelSize: 30, overlayOpacity: 40, bgBlur: 0,
