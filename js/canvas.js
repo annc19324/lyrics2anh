@@ -141,10 +141,11 @@ function renderTemplate3(ctx, index, w, h) {
 // Helpers
 function drawLyrics(ctx, x, h, fontSize, offsetY) {
     const lines = state.lyrics.split('\n');
-    let lyY = ((h - (lines.length * (fontSize * 1.8))) / 2) + offsetY;
+    const lh = fontSize * (state.style.lineHeight / 10 || 1.8);
+    let lyY = ((h - (lines.length * lh)) / 2) + offsetY;
     lines.forEach(line => {
         ctx.fillText(line, x, lyY);
-        lyY += (fontSize * 1.8);
+        lyY += lh;
     });
 }
 

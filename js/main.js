@@ -16,7 +16,7 @@ const DEFAULT_STATE = {
         template: '1', font: "'Patrick Hand', cursive", textColor: '#ffffff', fontSize: 30,
         songSize: 40, artistSize: 30, channelSize: 30, overlayOpacity: 40, bgBlur: 0,
         mask: 'none', songX: 0, songY: 0, artistX: 0, artistY: 0, lyricsX: 0, lyricsY: 0,
-        channelX: 0, channelY: -160, lyricsAlign: 'left', previewGap: 10
+        channelX: 0, channelY: -160, lyricsAlign: 'left', previewGap: 10, lineHeight: 18
     }
 };
 
@@ -57,7 +57,7 @@ function restoreUI() {
     // Style fields
     ['templateSelect', 'fontSelect', 'textColor', 'fontSize', 'songSize', 'artistSize', 'channelSize',
         'overlayOpacity', 'bgBlur', 'songX', 'songY', 'artistX', 'artistY', 'channelX', 'channelY',
-        'lyricsX', 'lyricsY', 'lyricsAlign', 'previewGap'].forEach(id => {
+        'lyricsX', 'lyricsY', 'lyricsAlign', 'previewGap', 'lineHeight'].forEach(id => {
             const el = document.getElementById(id);
             if (el) el.value = state.style[id.replace('Select', '').replace('Color', 'Color').replace('Align', 'Align')] || '';
         });
@@ -321,7 +321,7 @@ function setupEventListeners() {
     // Style inputs
     ['templateSelect', 'fontSelect', 'textColor', 'fontSize', 'songSize', 'artistSize', 'channelSize',
         'overlayOpacity', 'bgBlur', 'songX', 'songY', 'artistX', 'artistY', 'channelX', 'channelY',
-        'lyricsX', 'lyricsY', 'lyricsAlign', 'previewGap'].forEach(id => {
+        'lyricsX', 'lyricsY', 'lyricsAlign', 'previewGap', 'lineHeight'].forEach(id => {
             const el = document.getElementById(id);
             if (!el) return;
             const key = id.replace('Select', '').replace('Color', 'Color').replace('Align', 'Align');
