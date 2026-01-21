@@ -59,7 +59,7 @@ function renderTemplate1(ctx, index, w, h) {
 
     // Adjust for tall rectangle masks
     if (state.style.mask === 'rectangle' || state.style.mask === 'rounded_rectangle') {
-        artHeight = artWidth * 1.5;
+        artHeight = artWidth * 1.25;
         if (artHeight > h * 0.85) artHeight = h * 0.85; // Limit max height
     }
     const artY = (h - artHeight) / 2 + state.style.artPosY;
@@ -112,7 +112,7 @@ function renderTemplate2(ctx, index, w, h) {
 
         // Adjust for tall rectangle masks
         if (state.style.mask === 'rectangle' || state.style.mask === 'rounded_rectangle') {
-            artH = artW * 1.5;
+            artH = artW * 1.25;
             // Center the taller height relative to where the square would be
             artY = artY + (artW - artH) / 2;
         }
