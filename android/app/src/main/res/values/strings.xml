@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Lyrics2Anh</string>
+    <string name="title_activity_main">Lyrics2Anh</string>
+    <string name="package_name">com.annc19324.lyrics2anh</string>
+    <string name="custom_url_scheme">com.annc19324.lyrics2anh</string>
+</resources>

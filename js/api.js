@@ -1,5 +1,5 @@
 // For Production
-const API_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+const API_URL = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') && !window.Capacitor
     ? '/api'
     : 'https://lyrics2anh.onrender.com/api';
 let token = localStorage.getItem('l2a_token');
