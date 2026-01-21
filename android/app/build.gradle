@@ -16,6 +16,9 @@ android {
             ignoreAssetsPattern = '!.svn:!.git:!.ds_store:!*.scc:.*:!CVS:!thumbs.db:!picasa.ini:!*~:!*.apk'
         }
         resConfigs "vi", "en"
+        ndk {
+            abiFilters "arm64-v8a"
+        }
     }
     buildTypes {
         release {
@@ -24,23 +27,14 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         debug {
-            minifyEnabled false
-            shrinkResources false
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-    }
-    splits {
-        abi {
-            enable true
-            reset()
-            include "armeabi-v7a", "arm64-v8a", "x86", "x86_64"
-            universalApk true
         }
     }
     applicationVariants.all { variant ->
         variant.outputs.all { output ->
-            def abi = output.getFilter("ABI") ? "-" + output.getFilter("ABI") : "-all"
-            outputFileName = "lyrics2anh-app${abi}.apk"
+            outputFileName = "lyrics2anh-app.apk"
         }
     }
 }
