@@ -64,19 +64,30 @@ app.post('/api/auth/register', async (req, res) => {
     if (!passRegex.test(password)) return res.status(400).json({ error: 'Mật khẩu quá yếu (Tối thiểu 8 ký tự, gồm chữ hoa, chữ thường, số và ký tự đặc biệt)' });
 
     try {
+        // Check existence case-insensitively
+        const existing = await prisma.user.findFirst({
+            where: { username: { equals: username, mode: 'insensitive' } }
+        });
+        if (existing) return res.status(400).json({ error: 'Tài khoản này đã tồn tại trên hệ thống' });
+
         const hash = await bcrypt.hash(password, 10);
         const user = await prisma.user.create({
             data: { username, password: hash }
         });
         res.json({ message: 'Đăng ký thành công!' });
     } catch (e) {
-        res.status(400).json({ error: 'Tài khoản này đã tồn tại trên hệ thống' });
+        console.error(e);
+        res.status(500).json({ error: 'Lỗi hệ thống khi đăng ký' });
     }
 });
 
 app.post('/api/auth/login', async (req, res) => {
     const { username, password } = req.body;
-    const user = await prisma.user.findUnique({ where: { username } });
+    // Find user case-insensitively
+    const user = await prisma.user.findFirst({
+        where: { username: { equals: username, mode: 'insensitive' } }
+    });
+
     if (!user) return res.status(400).json({ error: 'Tài khoản không tồn tại' });
 
     const valid = await bcrypt.compare(password, user.password);

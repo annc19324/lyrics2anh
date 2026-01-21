@@ -69,7 +69,7 @@ const Auth = {
             token = data.token;
             localStorage.setItem('l2a_token', token);
             currentUser = { username: data.username, role: data.role };
-            Toast.show(`Chào mừng ${username}!`);
+            Toast.show(`Chào mừng ${data.username}!`);
             if (window.updateAuthUI) window.updateAuthUI();
             return true;
         } else {

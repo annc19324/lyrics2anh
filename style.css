@@ -303,14 +303,16 @@ canvas {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 20px;
+    flex-wrap: wrap;
+    gap: 15px;
 }
 
 .header-left,
 .header-right {
     display: flex;
-    gap: 20px;
+    gap: 12px;
     align-items: center;
+    flex-wrap: wrap;
 }
 
 .logo-area-header h1 {
@@ -498,7 +500,27 @@ canvas {
 
     .modern-header {
         order: -1;
-        padding: 8px 15px;
+        padding: 15px;
+    }
+
+    .header-container {
+        justify-content: center;
+        text-align: center;
+    }
+
+    .header-left,
+    .header-right {
+        justify-content: center;
+        width: 100%;
+    }
+
+    .logo-area-header {
+        width: 100%;
+        margin-bottom: 5px;
+    }
+
+    .logo-area-header h1 {
+        margin: 0;
     }
 
     .action-buttons {
