@@ -183,6 +183,19 @@ app.post('/api/admin/donate', authenticate, authorizeAdmin, async (req, res) => 
     res.json({ success: true });
 });
 
+// --- Download Route ---
+app.get('/download-app', (req, res) => {
+    const apkPath = path.join(__dirname, 'android/app/build/outputs/apk/release/lyrics2anh-app.apk');
+    res.download(apkPath, 'Lyrics2Anh.apk', (err) => {
+        if (err) {
+            console.error('Download error:', err);
+            if (!res.headersSent) {
+                res.status(404).send('File APK chưa sẵn sàng. Vui lòng thử lại sau.');
+            }
+        }
+    });
+});
+
 // Fallback to index.html for any other route
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'));

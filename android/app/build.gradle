@@ -16,15 +16,26 @@ android {
             ignoreAssetsPattern = '!.svn:!.git:!.ds_store:!*.scc:.*:!CVS:!thumbs.db:!picasa.ini:!*~:!*.apk'
         }
         resConfigs "vi", "en"
-        ndk {
-            abiFilters "arm64-v8a"
+        // ndk {
+        //     abiFilters "arm64-v8a"
+        // }
+    }
+
+    signingConfigs {
+        release {
+            storeFile file("release.keystore")
+            storePassword "Zeanokai@1"
+            keyAlias "lyrics2anh"
+            keyPassword "Zeanokai@1"
         }
     }
+
     buildTypes {
         release {
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
         debug {
             minifyEnabled true
