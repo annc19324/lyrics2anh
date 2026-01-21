@@ -1,7 +1,7 @@
 // --- Configuration ---
 const CONFIG = {
     canvasWidth: 1080,
-    canvasHeight: 1920,
+    canvasHeight: 1440,
     fontBaseSize: 30,
 };
 
@@ -16,7 +16,7 @@ const DEFAULT_STATE = {
         template: '1', font: "'Patrick Hand', cursive", textColor: '#ffffff', fontSize: 30,
         songSize: 40, artistSize: 30, channelSize: 30, overlayOpacity: 40, bgBlur: 0,
         mask: 'none', songX: 0, songY: 0, artistX: 0, artistY: 0, lyricsX: 0, lyricsY: 0,
-        channelX: 0, channelY: -160, lyricsAlign: 'left', previewGap: 10, lineHeight: 18
+        channelX: 0, channelY: -60, lyricsAlign: 'left', previewGap: 10, lineHeight: 18
     }
 };
 
