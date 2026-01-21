@@ -502,6 +502,7 @@ canvas {
     .modern-header {
         order: -1;
         padding: 15px;
+        padding-top: max(35px, env(safe-area-inset-top));
     }
 
     .header-container {
