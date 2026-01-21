@@ -54,8 +54,14 @@ function renderChannelSplit(ctx, index, w, h) {
 
 function renderTemplate1(ctx, index, w, h) {
     const scale = state.style.artScale / 100;
-    const artWidth = w * 0.8 * scale;
-    const artHeight = h * 0.55 * scale;
+    let artWidth = w * 0.8 * scale;
+    let artHeight = h * 0.55 * scale;
+
+    // Adjust for tall rectangle masks
+    if (state.style.mask === 'rectangle' || state.style.mask === 'rounded_rectangle') {
+        artHeight = artWidth * 1.5;
+        if (artHeight > h * 0.85) artHeight = h * 0.85; // Limit max height
+    }
     const artY = (h - artHeight) / 2 + state.style.artPosY;
 
     renderSplitArt(ctx, index, w, h, artWidth, artHeight, artY, state.style.artPosX);
