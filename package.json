@@ -8,7 +8,7 @@
     "dev": "nodemon server.js",
     "client": "serve .",
     "mobile-sync": "npx cap sync android",
-    "build:mobile": "mkdir www & xcopy /E /Y /I assets www\\assets & xcopy /E /Y /I js www\\js & copy /Y index.html www\\ & copy /Y style.css www\\ & copy /Y manifest.json www\\ & npx cap sync android"
+    "build:mobile": "if exist www rd /s /q www & mkdir www & xcopy /E /Y /I assets www\\assets & xcopy /E /Y /I js www\\js & copy /Y index.html www\\ & copy /Y style.css www\\ & copy /Y manifest.json www\\ & npx cap sync android"
   },
   "dependencies": {
     "@capacitor/android": "^8.0.1",
