@@ -458,10 +458,42 @@ function setupFeatureListeners() {
     document.querySelector('.close-ad')?.addEventListener('click', () => document.getElementById('adContainer').classList.add('hidden'));
 }
 
-function downloadImages() {
-    const link = document.createElement('a');
-    link.download = 'intro.png'; link.href = canvas1.toDataURL(); link.click();
-    setTimeout(() => { link.download = 'lyrics.png'; link.href = canvas2.toDataURL(); link.click(); }, 500);
+async function downloadImages() {
+    const data1 = canvas1.toDataURL();
+    const data2 = canvas2.toDataURL();
+
+    if (window.Capacitor && window.Capacitor.isNativePlatform()) {
+        try {
+            const { Filesystem } = window.Capacitor.Plugins;
+            const { Share } = window.Capacitor.Plugins;
+
+            const saveAndShare = async (data, name) => {
+                const fileName = `${Date.now()}_${name}`;
+                const result = await Filesystem.writeFile({
+                    path: fileName,
+                    data: data.split(',')[1],
+                    directory: 'CACHE', // Use CACHE directory for sharing
+                });
+
+                await Share.share({
+                    title: 'Lưu ảnh Lyrics',
+                    text: 'Chia sẻ hoặc lưu ảnh của bạn',
+                    url: result.uri,
+                    dialogTitle: 'Lưu ảnh',
+                });
+            };
+
+            await saveAndShare(data1, 'intro.png');
+            setTimeout(() => saveAndShare(data2, 'lyrics.png'), 1000);
+        } catch (e) {
+            console.error('Download error:', e);
+            Toast.show('Lỗi tải ảnh: ' + e.message, 'error');
+        }
+    } else {
+        const link = document.createElement('a');
+        link.download = 'intro.png'; link.href = data1; link.click();
+        setTimeout(() => { link.download = 'lyrics.png'; link.href = data2; link.click(); }, 500);
+    }
 }
 
 window.updateAuthUI = updateAuthUI;
