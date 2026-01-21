@@ -165,6 +165,14 @@ function applyMask(ctx, x, y, w, h) {
     const mask = state.style.mask;
     if (mask === 'circle') ctx.arc(x + w / 2, y + h / 2, Math.min(w, h) / 2, 0, Math.PI * 2);
     else if (mask === 'rounded' || mask === 'album') ctx.roundRect(x, y, w, h, 40);
+    else if (mask === 'rectangle') {
+        const rw = w * 0.7;
+        ctx.rect(x + (w - rw) / 2, y, rw, h);
+    }
+    else if (mask === 'rounded_rectangle') {
+        const rw = w * 0.7;
+        ctx.roundRect(x + (w - rw) / 2, y, rw, h, 40);
+    }
     else if (mask === 'arch') ctx.roundRect(x, y, w, h, [300, 300, 0, 0]);
     else if (mask === 'grunge') drawGrungeMask(ctx, x, y, w, h);
     else if (mask === 'blob') drawBlobMask(ctx, x, y, w, h);
