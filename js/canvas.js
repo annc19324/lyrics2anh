@@ -53,11 +53,12 @@ function renderChannelSplit(ctx, index, w, h) {
 }
 
 function renderTemplate1(ctx, index, w, h) {
-    const artWidth = w * 0.8;
-    const artHeight = h * 0.55;
-    const artY = (h - artHeight) / 2;
+    const scale = state.style.artScale / 100;
+    const artWidth = w * 0.8 * scale;
+    const artHeight = h * 0.55 * scale;
+    const artY = (h - artHeight) / 2 + state.style.artPosY;
 
-    renderSplitArt(ctx, index, w, h, artWidth, artHeight, artY);
+    renderSplitArt(ctx, index, w, h, artWidth, artHeight, artY, state.style.artPosX);
 
     ctx.fillStyle = state.style.textColor;
     if (index === 1) {
@@ -98,9 +99,9 @@ function renderTemplate2(ctx, index, w, h) {
         ctx.font = `700 ${state.style.songSize}px ${state.style.font}`;
         wrapText(ctx, state.songName, centerX + state.style.songX, songY, w - 100, state.style.songSize * 1.2);
 
-        const artSize = 600;
-        const artY = songY + 180;
-        const artX = centerX - artSize / 2;
+        const artSize = 600 * (state.style.artScale / 100);
+        const artY = songY + 180 + state.style.artPosY;
+        const artX = centerX - artSize / 2 + state.style.artPosX;
 
         ctx.save();
         applyMask(ctx, artX, artY, artSize, artSize);
@@ -149,9 +150,9 @@ function drawLyrics(ctx, x, h, fontSize, offsetY) {
     });
 }
 
-function renderSplitArt(ctx, index, w, h, artWidth, artHeight, artY) {
+function renderSplitArt(ctx, index, w, h, artWidth, artHeight, artY, artXOffset = 0) {
     const seamX = (index === 1) ? w : 0;
-    const localArtX = seamX - (artWidth / 2);
+    const localArtX = seamX - (artWidth / 2) + artXOffset;
     ctx.save();
     applyMask(ctx, localArtX, artY, artWidth, artHeight);
     if (state.images.art) drawImageCheck(ctx, state.images.art, localArtX, artY, artWidth, artHeight);
