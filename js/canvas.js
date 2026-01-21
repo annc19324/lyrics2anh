@@ -99,14 +99,24 @@ function renderTemplate2(ctx, index, w, h) {
         ctx.font = `700 ${state.style.songSize}px ${state.style.font}`;
         wrapText(ctx, state.songName, centerX + state.style.songX, songY, w - 100, state.style.songSize * 1.2);
 
-        const artSize = 600 * (state.style.artScale / 100);
-        const artY = songY + 180 + state.style.artPosY;
-        const artX = centerX - artSize / 2 + state.style.artPosX;
+        let artW = 600 * (state.style.artScale / 100);
+        let artH = artW;
+
+        let artY = songY + 180 + state.style.artPosY;
+
+        // Adjust for tall rectangle masks
+        if (state.style.mask === 'rectangle' || state.style.mask === 'rounded_rectangle') {
+            artH = artW * 1.5;
+            // Center the taller height relative to where the square would be
+            artY = artY + (artW - artH) / 2;
+        }
+
+        const artX = centerX - artW / 2 + state.style.artPosX;
 
         ctx.save();
-        applyMask(ctx, artX, artY, artSize, artSize);
-        if (state.images.art) drawImageCheck(ctx, state.images.art, artX, artY, artSize, artSize);
-        else { ctx.fillStyle = '#334155'; ctx.fillRect(artX, artY, artSize, artSize); }
+        applyMask(ctx, artX, artY, artW, artH);
+        if (state.images.art) drawImageCheck(ctx, state.images.art, artX, artY, artW, artH);
+        else { ctx.fillStyle = '#334155'; ctx.fillRect(artX, artY, artW, artH); }
         ctx.restore();
     } else {
         const anchorX = (state.style.lyricsAlign === 'left') ? (100 + state.style.lyricsX) :
@@ -164,15 +174,8 @@ function applyMask(ctx, x, y, w, h) {
     ctx.beginPath();
     const mask = state.style.mask;
     if (mask === 'circle') ctx.arc(x + w / 2, y + h / 2, Math.min(w, h) / 2, 0, Math.PI * 2);
-    else if (mask === 'rounded' || mask === 'album') ctx.roundRect(x, y, w, h, 40);
-    else if (mask === 'rectangle') {
-        const rw = w * 0.7;
-        ctx.rect(x + (w - rw) / 2, y, rw, h);
-    }
-    else if (mask === 'rounded_rectangle') {
-        const rw = w * 0.7;
-        ctx.roundRect(x + (w - rw) / 2, y, rw, h, 40);
-    }
+    else if (mask === 'rounded' || mask === 'album' || mask === 'rounded_rectangle') ctx.roundRect(x, y, w, h, 40);
+    else if (mask === 'rectangle') ctx.rect(x, y, w, h);
     else if (mask === 'arch') ctx.roundRect(x, y, w, h, [300, 300, 0, 0]);
     else if (mask === 'grunge') drawGrungeMask(ctx, x, y, w, h);
     else if (mask === 'blob') drawBlobMask(ctx, x, y, w, h);
