@@ -3,8 +3,9 @@ const IS_LOCAL = (window.location.hostname === 'localhost' || window.location.ho
 const PRIMARY_DOMAIN = 'https://lyrics2anh.onrender.com/api';
 const SECONDARY_DOMAIN = 'https://lyrics2anh-2cun.onrender.com/api';
 
-let API_URL = IS_LOCAL ? '/api' : PRIMARY_DOMAIN;
-let isUsingBackup = false;
+const BACKUP_KEY = 'use_backup_backend';
+let isUsingBackup = localStorage.getItem(BACKUP_KEY) === 'true';
+let API_URL = IS_LOCAL ? '/api' : (isUsingBackup ? SECONDARY_DOMAIN : PRIMARY_DOMAIN);
 let recoveryInterval = null;
 
 const BackendManager = {
@@ -16,6 +17,7 @@ const BackendManager = {
             if (res.ok) {
                 API_URL = PRIMARY_DOMAIN;
                 isUsingBackup = false;
+                localStorage.removeItem(BACKUP_KEY);
                 if (recoveryInterval) { clearInterval(recoveryInterval); recoveryInterval = null; }
                 if (typeof Toast !== 'undefined') Toast.show('Đã kết nối lại máy chủ chính!');
                 console.log('Restored Primary Backend');
@@ -26,14 +28,23 @@ const BackendManager = {
         if (isUsingBackup || IS_LOCAL) return;
         API_URL = SECONDARY_DOMAIN;
         isUsingBackup = true;
+        localStorage.setItem(BACKUP_KEY, 'true');
         if (typeof Toast !== 'undefined') Toast.show('Máy chủ chính gặp sự cố, chuyển sang máy chủ phụ...', 'warning');
         console.warn('Switched to Backup Backend');
 
         if (!recoveryInterval) {
-            recoveryInterval = setInterval(BackendManager.checkRecovery, 30000); // Check every 30s
+            recoveryInterval = setInterval(BackendManager.checkRecovery, 24 * 60 * 60 * 1000); // Check every 24h
+        }
+    },
+    init: () => {
+        if (isUsingBackup && !IS_LOCAL && !recoveryInterval) {
+            console.warn('App started in Backup Mode');
+            recoveryInterval = setInterval(BackendManager.checkRecovery, 24 * 60 * 60 * 1000);
         }
     }
 };
+
+BackendManager.init();
 
 const fetchWithFailover = async (endpoint, options) => {
     try {
