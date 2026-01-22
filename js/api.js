@@ -1,7 +1,58 @@
-// For Production
-const API_URL = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') && !window.Capacitor
-    ? '/api'
-    : 'https://lyrics2anh.onrender.com/api';
+// Backend Configuration
+const IS_LOCAL = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') && !window.Capacitor;
+const PRIMARY_DOMAIN = 'https://lyrics2anh.onrender.com/api';
+const SECONDARY_DOMAIN = 'https://lyrics2anh-2cun.onrender.com/api';
+
+let API_URL = IS_LOCAL ? '/api' : PRIMARY_DOMAIN;
+let isUsingBackup = false;
+let recoveryInterval = null;
+
+const BackendManager = {
+    checkRecovery: async () => {
+        if (!isUsingBackup || IS_LOCAL) return;
+        try {
+            // Check lightweight endpoint to see if primary is back
+            const res = await fetch(`${PRIMARY_DOMAIN}/ads`, { method: 'GET' });
+            if (res.ok) {
+                API_URL = PRIMARY_DOMAIN;
+                isUsingBackup = false;
+                if (recoveryInterval) { clearInterval(recoveryInterval); recoveryInterval = null; }
+                if (typeof Toast !== 'undefined') Toast.show('Đã kết nối lại máy chủ chính!');
+                console.log('Restored Primary Backend');
+            }
+        } catch (e) { /* Still down */ }
+    },
+    switchToBackup: () => {
+        if (isUsingBackup || IS_LOCAL) return;
+        API_URL = SECONDARY_DOMAIN;
+        isUsingBackup = true;
+        if (typeof Toast !== 'undefined') Toast.show('Máy chủ chính gặp sự cố, chuyển sang máy chủ phụ...', 'warning');
+        console.warn('Switched to Backup Backend');
+
+        if (!recoveryInterval) {
+            recoveryInterval = setInterval(BackendManager.checkRecovery, 30000); // Check every 30s
+        }
+    }
+};
+
+const fetchWithFailover = async (endpoint, options) => {
+    try {
+        const res = await fetch(`${API_URL}${endpoint}`, options);
+        // Treat 502/503/504 as server down
+        if (!res.ok && res.status >= 502) {
+            throw new Error(`Server Error ${res.status}`);
+        }
+        return res;
+    } catch (err) {
+        // If we are not local and not yet on backup, try switching
+        if (!IS_LOCAL && !isUsingBackup) {
+            BackendManager.switchToBackup();
+            // Retry request on new URL
+            return await fetch(`${API_URL}${endpoint}`, options);
+        }
+        throw err;
+    }
+};
 let token = localStorage.getItem('l2a_token');
 let currentUser = null;
 
@@ -25,7 +76,7 @@ const API = {
     async get(endpoint) {
         const headers = token ? { 'Authorization': `Bearer ${token}` } : {};
         try {
-            const res = await fetch(`${API_URL}${endpoint}`, { headers });
+            const res = await fetchWithFailover(endpoint, { headers });
             return await res.json();
         } catch (e) {
             console.error(e);
@@ -38,7 +89,7 @@ const API = {
             ...(token ? { 'Authorization': `Bearer ${token}` } : {})
         };
         try {
-            const res = await fetch(`${API_URL}${endpoint}`, {
+            const res = await fetchWithFailover(endpoint, {
                 method: 'POST',
                 headers,
                 body: JSON.stringify(body)
@@ -51,7 +102,7 @@ const API = {
     async delete(endpoint) {
         const headers = token ? { 'Authorization': `Bearer ${token}` } : {};
         try {
-            const res = await fetch(`${API_URL}${endpoint}`, { method: 'DELETE', headers });
+            const res = await fetchWithFailover(endpoint, { method: 'DELETE', headers });
             return await res.json();
         } catch (e) {
             return { error: 'Network error' };
