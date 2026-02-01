@@ -238,6 +238,17 @@ function drawImageCheck(ctx, img, x, y, w, h) {
     let rw, rh, rx, ry;
     if (imgRatio < rectRatio) { rw = w; rh = w / imgRatio; rx = x; ry = y - (rh - h) / 2; }
     else { rh = h; rw = h * imgRatio; ry = y; rx = x - (rw - w) / 2; }
+
+    // Apply Inner Zoom & Pan
+    const scale = (state.style.artInnerScale || 100) / 100;
+    const pX = state.style.artInnerX || 0;
+    const pY = state.style.artInnerY || 0;
+
+    rx = rx + (rw - rw * scale) / 2 + pX;
+    ry = ry + (rh - rh * scale) / 2 + pY;
+    rw = rw * scale;
+    rh = rh * scale;
+
     ctx.drawImage(img, rx, ry, rw, rh);
 }
 
